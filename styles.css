@@ -1,19 +1,82 @@
-*{box-sizing:border-box}
-body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:0;background:#f6f7f9;color:#111}
-header{background:#111;color:#fff;padding:16px 20px}
-h1{margin:0;font-weight:800;letter-spacing:.3px}
-.badge{background:#00c853;color:#fff;border-radius:999px;padding:2px 10px;font-size:.8rem;margin-left:6px}
-main{padding:20px;display:grid;gap:16px;max-width:980px;margin:auto}
-.card{background:#fff;border-radius:16px;padding:16px;box-shadow:0 6px 24px rgba(0,0,0,.06)}
-.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-label{display:flex;flex-direction:column;font-size:.9rem;gap:6px}
-input,select,textarea,button{padding:10px;border-radius:10px;border:1px solid #d9dbe0}
-button{cursor:pointer}
-#queue .ticket{border:1px solid #e5e7eb;border-radius:12px;padding:12px;margin:8px 0;display:grid;grid-template-columns:1fr auto;gap:8px}
-.ticket .meta{font-size:.85rem;color:#555}
-.priority-Emergency{border-left:6px solid #ff1744;padding-left:8px}
-.priority-Urgent{border-left:6px solid #ff9100;padding-left:8px}
-.priority-Normal{border-left:6px solid #00c853;padding-left:8px}
-.actions{display:flex;gap:10px}
-footer{padding:16px 20px;color:#666}
-@media(max-width:720px){.grid{grid-template-columns:1fr}}
+/* ----- Reset & base ----- */
+* { box-sizing: border-box; }
+:root {
+  --bg: #0b0c10;
+  --card: #111318;
+  --subtle: #2a2f3a;
+  --text: #e8eef6;
+  --muted: #a9b3c3;
+  --accent: #35d18f;
+  --accent-2: #3ea8ff;
+  --danger: #ff5a76;
+  --warn: #ffb02e;
+  --ok: #4cd19a;
+  --shadow: 0 10px 30px rgba(0,0,0,.35);
+}
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  background: radial-gradient(1200px 800px at 20% -10%, #1b1f2a 0%, #0d1117 55%, #0b0c10 100%);
+  color: var(--text);
+}
+
+/* ----- Header ----- */
+header {
+  position: sticky; top: 0; z-index: 10;
+  backdrop-filter: blur(6px);
+  background: linear-gradient(180deg, rgba(13,17,23,.85), rgba(13,17,23,.65));
+  border-bottom: 1px solid rgba(255,255,255,.06);
+  padding: 16px 20px;
+}
+h1 { margin: 0; font-weight: 800; letter-spacing: .2px; }
+.badge {
+  background: linear-gradient(135deg, var(--accent), #6ef7bf);
+  color: #062b19; font-weight: 800;
+  border-radius: 999px; padding: 2px 10px; font-size: .8rem; margin-left: 8px;
+}
+
+/* ----- Layout ----- */
+main { padding: 28px 20px 40px; max-width: 1100px; margin: 0 auto; display: grid; gap: 18px; }
+.card {
+  background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+  border: 1px solid rgba(255,255,255,.06);
+  border-radius: 16px; padding: 18px; box-shadow: var(--shadow);
+}
+h2 { margin: 0 0 12px; }
+
+/* ----- Form ----- */
+.grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; }
+label { display: flex; flex-direction: column; font-size: .92rem; gap: 6px; color: var(--muted); }
+input, select, textarea, button {
+  padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,.12);
+  background: #0f1420; color: var(--text); outline: none;
+}
+input:focus, select:focus, textarea:focus { border-color: var(--accent-2); box-shadow: 0 0 0 2px rgba(62,168,255,.2); }
+textarea { resize: vertical; min-height: 160px; }
+button {
+  cursor: pointer; background: linear-gradient(135deg, var(--accent-2), #7ac4ff);
+  color: #04121f; border: none; font-weight: 700;
+  transition: transform .06s ease, filter .2s ease;
+}
+button:hover { filter: brightness(1.08); }
+button:active { transform: translateY(1px); }
+
+/* ----- Queue ----- */
+#queue .ticket {
+  background: #0e1320; border: 1px solid rgba(255,255,255,.08);
+  border-radius: 12px; padding: 12px; margin: 10px 0; display: grid; grid-template-columns: 1fr auto; gap: 10px;
+}
+.ticket .meta { font-size: .86rem; color: var(--muted); }
+.priority-Emergency { border-left: 6px solid var(--danger); padding-left: 10px; }
+.priority-Urgent    { border-left: 6px solid var(--warn);   padding-left: 10px; }
+.priority-Normal    { border-left: 6px solid var(--ok);     padding-left: 10px; }
+
+.actions { display: flex; gap: 10px; }
+.actions button { background: linear-gradient(135deg, #2edb96, #64f2ba); color:#052015 }
+.actions button#clearAll { background: linear-gradient(135deg, #ff8aa0, #ff5a76); color:#2b0010 }
+
+footer { padding: 12px 20px; color: var(--muted); }
+
+/* ----- Responsive ----- */
+@media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
