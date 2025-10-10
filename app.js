@@ -1,0 +1,1 @@
+console.log('MDL-R placeholder loaded')
