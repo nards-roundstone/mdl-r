@@ -1,1 +1,64 @@
-<!doctype html><meta charset='utf-8'><title>MDL-R</title><link rel='stylesheet' href='styles.css'><h1>Maintenance Desk Lite — R</h1><p>Open this file to demo. Add tickets below.</p><script src='app.js'></script>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Maintenance Desk Lite — Building R</title>
+<link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+<header>
+  <h1>Maintenance Desk Lite <span class="badge">R</span></h1>
+  <p>Offline-first prototype. Tickets saved in your browser.</p>
+</header>
+
+<main>
+<section class="card">
+  <h2>New Ticket</h2>
+  <form id="ticketForm">
+    <div class="grid">
+      <label>Unit
+        <input list="units" name="unit_code" required placeholder="R-0123"/>
+      </label>
+      <label>Category
+        <select name="category" required id="categorySelect"></select>
+      </label>
+      <label>Priority
+        <select name="priority" id="prioritySelect">
+          <option>Normal</option>
+          <option>Urgent</option>
+          <option>Emergency</option>
+        </select>
+      </label>
+      <label>Contact Name
+        <input name="contact_name" placeholder="Juan Dela Cruz"/>
+      </label>
+      <label>Contact Phone
+        <input name="contact_phone" placeholder="+63"/>
+      </label>
+    </div>
+    <label>Description
+      <textarea name="description" rows="3" placeholder="Describe the issue..."></textarea>
+    </label>
+    <button type="submit">Submit Ticket</button>
+  </form>
+  <datalist id="units"></datalist>
+</section>
+
+<section class="card">
+  <h2>Queue</h2>
+  <div id="queue"></div>
+  <div class="actions">
+    <button id="exportCsv">Export CSV</button>
+    <button id="clearAll">Clear (local)</button>
+  </div>
+</section>
+</main>
+
+<footer>
+  <small>R-only. Customize data in <code>/data</code>. SLA visible in <code>/data/sla_matrix.csv</code>.</small>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
