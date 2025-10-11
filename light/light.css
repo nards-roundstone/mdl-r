@@ -1,11 +1,19 @@
-/* Light theme overrides for the /light page */
-:root{
+/* Light theme overrides — only apply when body has .theme-light */
+body.theme-light{
   --bg:#f4f6f8; --card:#ffffff; --subtle:#eef2f6;
   --text:#0d1b2a; --muted:#556070; --accent:#20c997; --accent-2:#3ea8ff;
   --danger:#ff4d6d; --warn:#ffb020; --ok:#2fcf8f;
+  background: linear-gradient(180deg,#f7f9fc 0%,#eef2f6 100%);
+  color: var(--text);
 }
-body{background:linear-gradient(180deg,#f7f9fc 0%,#eef2f6 100%); color:var(--text);}
-header{background:#0d1b2a; color:#fff;}
-.card{border:1px solid #e6ecf2; box-shadow:0 8px 24px rgba(0,0,0,.06);}
-input,select,textarea,button{background:#fff; border:1px solid #d9e1ea; color:var(--text);}
-button, input, select, textarea { min-height: 44px; } /* bigger tap targets */
+body.theme-light header{ background:#0d1b2a; color:#fff; }
+body.theme-light .card{ border:1px solid #e6ecf2; box-shadow:0 8px 24px rgba(0,0,0,.06); }
+body.theme-light input,
+body.theme-light select,
+body.theme-light textarea,
+body.theme-light button{
+  background:#fff; border:1px solid #d9e1ea; color:var(--text);
+}
+
+/* Bigger tap targets (kept for both themes) */
+button, input, select, textarea { min-height: 44px; }
