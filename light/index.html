@@ -5,19 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Maintenance Desk Lite — Building R (Light)</title>
 <link rel="stylesheet" href="../styles.css"/>
-
-<link rel="stylesheet" href="../styles.css"/>
 <link rel="stylesheet" href="light.css"/>
-
 </head>
-
-<!-- start in LIGHT mode -->
 <body class="theme-light">
 <header>
   <h1>Maintenance Desk Lite <span class="badge">R</span></h1>
   <p>Offline-first prototype. Tickets saved in your browser.</p>
   <button id="themeToggle" class="ghost">Dark mode</button>
-
 </header>
 
 <main>
@@ -61,22 +55,18 @@
   <small>R-only. Customize data in <code>/data</code>. SLA visible in <code>/data/sla_matrix.csv</code>.</small>
 </footer>
 
-<!-- reuse the same JS -->
 <script src="../app.js"></script>
-
-<!-- theme toggle (same as root page) -->
 <script>
+  // Light/Dark toggle
   const btn = document.getElementById('themeToggle');
   function apply(theme){
     document.body.classList.toggle('theme-light', theme === 'light');
-    document.body.classList.toggle('theme-dark', theme === 'dark');
+    document.body.classList.toggle('theme-dark',  theme === 'dark');
     localStorage.setItem('theme', theme);
     btn.textContent = theme === 'light' ? 'Dark mode' : 'Light mode';
   }
-  const initial = document.body.classList.contains('theme-light') ? 'light'
-    : (localStorage.getItem('theme') ||
-      (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'));
-  apply(initial);
+  const initial = 'light';
+  apply(localStorage.getItem('theme') || initial);
   btn.addEventListener('click', () => apply(
     document.body.classList.contains('theme-light') ? 'dark' : 'light'
   ));
