@@ -1,5 +1,84 @@
 // Maintenance Desk Lite — single-file JS
 // Works at / and at /light/ by auto-picking the right data folder.
+// --- Category dropdown: CSV with safe fallback ---
+const DEFAULT_CATEGORIES = [
+  ["PMO","Elevator","Stuck - car not moving","Elevator Team","1"],
+  ["PMO","Security","Unauthorized access","Security Desk","4"],
+  ["PMO","Structural","Cracks or holes","Engineering","24"],
+  ["PMO","Amenities","Clubhouse request","Admin","24"],
+  ["PMO","Billing","SOA concern","Finance","48"],
+  ["PMO","Staff","House rules compliance","Admin","24"],
+  ["PMO","Community","Noise or smoking","Security Desk","8"],
+  ["PMO","Admin","Document request","Admin","48"],
+  ["InBuilding","Plumbing","Leak under sink","Building Plumber","24"],
+  ["InBuilding","Electrical","No power in room","Building Electrician","24"],
+  ["InBuilding","ACU","Water drip","HVAC Tech","24"],
+  ["InBuilding","Housekeeping","Spill cleanup","Janitorial","8"],
+  ["InBuilding","Parking","Blocked slot","Parking Marshal","4"],
+  ["InBuilding","Pets","Leash/collar complaint","Security Desk","8"],
+];
+
+function parseCsv(txt) {
+  const lines = txt.trim().split(/\r?\n/);
+  lines.shift(); // remove header
+  return lines.map(l => l.split(',').map(s => s.trim()));
+}
+
+async function loadCategoryRows() {
+  const path = location.pathname.includes('/light/')
+    ? '../data/ticket_categories.csv'
+    : './data/ticket_categories.csv';
+  try {
+    const res = await fetch(path, { cache: 'no-store' });
+    if (!res.ok) throw new Error('csv not ok');
+    const txt = await res.text();
+    const rows = parseCsv(txt);
+    return rows.length ? rows : DEFAULT_CATEGORIES;
+  } catch (e) {
+    return DEFAULT_CATEGORIES;
+  }
+}
+
+async function initCategories() {
+  const catEl = document.getElementById('categorySelect');
+  const subEl = document.getElementById('subcategorySelect'); // ok if missing
+  if (!catEl) return;
+
+  const rows = await loadCategoryRows();
+
+  // Build category -> {scope, subcats}
+  const order = { PMO: 0, InBuilding: 1 };
+  const catMap = new Map();
+  rows.forEach(([scope, category, subcat]) => {
+    if (!catMap.has(category)) catMap.set(category, { scope, subcats: new Set() });
+    if (subcat) catMap.get(category).subcats.add(subcat);
+  });
+
+  // Fill the Category dropdown (PMO first, then InBuilding)
+  const items = [...catMap.entries()].sort((a,b) =>
+    (order[a[1].scope]-order[b[1].scope]) || a[0].localeCompare(b[0])
+  );
+  catEl.innerHTML = `<option value="" disabled selected>Select a category...</option>` +
+    items.map(([cat,info]) => `<option value="${cat}" data-scope="${info.scope}">${cat}</option>`).join('');
+
+  // Optional: Subcategory dropdown auto-fill
+  if (subEl) {
+    subEl.innerHTML = `<option value="" disabled selected>Select a subcategory...</option>`;
+    catEl.addEventListener('change', () => {
+      const info = catMap.get(catEl.value);
+      if (!info) return;
+      const subs = [...info.subcats].sort((a,b)=>a.localeCompare(b));
+      subEl.innerHTML = `<option value="" disabled selected>Select a subcategory...</option>` +
+        subs.map(s => `<option value="${s}">${s}</option>`).join('');
+      subEl.disabled = subs.length === 0;
+    });
+  }
+}
+
+window.addEventListener('DOMContentLoaded', initCategories);
+
+
+
 const LS_KEY = "mdl_r_tickets_v1";
 const DATA_PREFIX = location.pathname.includes("/light/") ? "../data/" : "data/";
 
