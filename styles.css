@@ -1,4 +1,7 @@
 /* ----- Reset & base ----- */
+@import url("./styles/light_polish.css");
+@import url("./styles/help_popover.css");
+
 * { box-sizing: border-box; }
 :root {
   --bg: #0b0c10;
