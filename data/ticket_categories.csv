@@ -1,2 +1,15 @@
-category_code,description,default_priority
-PLUMBING,Test,Normal
+scope,category,subcategory,default_assignee,sla_hours
+PMO,Elevator,Stuck - car not moving,Elevator Team,1
+PMO,Security,Unauthorized access,Security Desk,4
+PMO,Structural,Cracks or holes,Engineering,24
+PMO,Amenities,Clubhouse request,Admin,24
+PMO,Billing,SOA concern,Finance,48
+PMO,Staff,House rules compliance,Admin,24
+PMO,Community,Noise or smoking,Security Desk,8
+PMO,Admin,Document request,Admin,48
+InBuilding,Plumbing,Leak under sink,Building Plumber,24
+InBuilding,Electrical,No power in room,Building Electrician,24
+InBuilding,ACU,Water drip,HVAC Tech,24
+InBuilding,Housekeeping,Spill cleanup,Janitorial,8
+InBuilding,Parking,Blocked slot,Parking Marshal,4
+InBuilding,Pets,Leash/collar complaint,Security Desk,8
